@@ -1,43 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {createContext, ReactNode, useEffect} from "react";
-import {useWeb3ModalProvider} from "@web3modal/ethers/react";
-import {ethers} from "ethers";
+import {abi} from "@/lib/abi";
+import {createContext, ReactNode} from "react";
+import {useReadContract} from "wagmi";
 
 export const GlobalContext = createContext({});
 
-const ContractAddress = "0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D0";
-
-const USDTAbi = [
-  "function name() view returns (string)",
-  "function symbol() view returns (string)",
-  "function balanceOf(address) view returns (uint)",
-  "function transfer(address to, uint amount)",
-  "event Transfer(address indexed from, address indexed to, uint amount)",
-];
+const ContractAddress = "0x033Db7F7E7eF664Dd6dB84A0Eb77a0533013ff5A";
 
 export function GlobalContextProvider({children}: {children: ReactNode}) {
-  const {walletProvider} = useWeb3ModalProvider();
-  console.log(walletProvider, "walletProvider");
+  const result = useReadContract({
+    abi: abi,
+    address: ContractAddress,
+    functionName: "retrieve",
+  });
 
-  useEffect(() => {
-    async function returnContract() {
-      if (!walletProvider) {
-        return;
-      }
-
-      const ethersProvider = new ethers.providers.Web3Provider(walletProvider!);
-      const signer = ethersProvider.getSigner();
-
-      const contract = new ethers.Contract(ContractAddress, USDTAbi, signer);
-
-      return contract;
-    }
-
-    (async function () {
-      const contract = await returnContract();
-      console.log(contract, "contract");
-    })();
-  }, [walletProvider]);
+  console.log(result, "result");
 
   return <GlobalContext.Provider value={{}}>{children}</GlobalContext.Provider>;
 }
