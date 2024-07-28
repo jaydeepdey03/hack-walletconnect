@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {createContext, ReactNode, useEffect} from "react";
 import {useWeb3ModalProvider} from "@web3modal/ethers/react";
-import {BrowserProvider, Contract} from "ethers";
+import {ethers} from "ethers";
 
 export const GlobalContext = createContext({});
 
@@ -17,7 +17,7 @@ const USDTAbi = [
 
 export function GlobalContextProvider({children}: {children: ReactNode}) {
   const {walletProvider} = useWeb3ModalProvider();
-  console.log(walletProvider, "isConnected");
+  console.log(walletProvider, "walletProvider");
 
   useEffect(() => {
     async function returnContract() {
@@ -25,10 +25,10 @@ export function GlobalContextProvider({children}: {children: ReactNode}) {
         return;
       }
 
-      const ethersProvider = new BrowserProvider(walletProvider!);
-      const signer = await ethersProvider.getSigner();
+      const ethersProvider = new ethers.providers.Web3Provider(walletProvider!);
+      const signer = ethersProvider.getSigner();
 
-      const contract = new Contract(ContractAddress, USDTAbi, signer);
+      const contract = new ethers.Contract(ContractAddress, USDTAbi, signer);
 
       return contract;
     }

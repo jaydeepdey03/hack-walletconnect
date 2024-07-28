@@ -7,10 +7,10 @@ import {createWeb3Modal, defaultConfig} from "@web3modal/ethers5/react";
 const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID!;
 
 const metadata = {
-  name: "My Website",
-  description: "My Website description",
-  url: "http://localhost:3000",
-  icons: ["https://avatars.mywebsite.com/"],
+  name: "lfgho-hackathon",
+  description: "AppKit Example",
+  url: "https://web3modal.com", // origin must match your domain & subdomain
+  icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 
 const ethereumSepolia = {
