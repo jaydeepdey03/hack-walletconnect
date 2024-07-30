@@ -14,7 +14,7 @@ export function GlobalContextProvider({children}: {children: ReactNode}) {
     functionName: "retrieve",
   });
 
-  console.log(result, "result");
+  console.log(result.isStale, "stale");
 
   return <GlobalContext.Provider value={{}}>{children}</GlobalContext.Provider>;
 }
