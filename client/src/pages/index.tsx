@@ -5,7 +5,7 @@ import {useGlobalContextHook} from "@/context/useGlobalContextHook";
 import {useEffect, useState} from "react";
 import {useWriteContract} from "wagmi";
 import {abi} from "@/lib/abi";
-import {Hex} from "viem";
+import {type Hex} from "viem";
 
 const inter = Inter({subsets: ["latin"]});
 
